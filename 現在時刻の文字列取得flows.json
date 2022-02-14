@@ -1,0 +1,153 @@
+[
+    {
+        "id": "8eb2284d2a0607cf",
+        "type": "tab",
+        "label": "フロー 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "31055a11b7b04e68",
+        "type": "inject",
+        "z": "8eb2284d2a0607cf",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 80,
+        "wires": [
+            [
+                "8977de0e591c3052"
+            ]
+        ]
+    },
+    {
+        "id": "8977de0e591c3052",
+        "type": "change",
+        "z": "8eb2284d2a0607cf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$fromMillis(payload,'[Y0001][M01][D01]T[H01][m01]','+0900')",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 80,
+        "wires": [
+            [
+                "8b4c5042f3f26f35"
+            ]
+        ]
+    },
+    {
+        "id": "8b4c5042f3f26f35",
+        "type": "debug",
+        "z": "8eb2284d2a0607cf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b318cd161c428838",
+        "type": "moment",
+        "z": "8eb2284d2a0607cf",
+        "name": "",
+        "topic": "",
+        "input": "payload",
+        "inputType": "msg",
+        "inTz": "Africa/Abidjan",
+        "adjAmount": "0",
+        "adjType": "hours",
+        "adjDir": "add",
+        "format": "YYYYMMDDTHHmm",
+        "locale": "ja_JP",
+        "output": "payload",
+        "outputType": "msg",
+        "outTz": "Asia/Tokyo",
+        "x": 360,
+        "y": 240,
+        "wires": [
+            [
+                "3396668a27432d00"
+            ]
+        ]
+    },
+    {
+        "id": "68de5c917267ee05",
+        "type": "inject",
+        "z": "8eb2284d2a0607cf",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "b318cd161c428838"
+            ]
+        ]
+    },
+    {
+        "id": "3396668a27432d00",
+        "type": "debug",
+        "z": "8eb2284d2a0607cf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 240,
+        "wires": []
+    }
+]
