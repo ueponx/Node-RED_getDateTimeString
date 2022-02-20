@@ -29,7 +29,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 120,
-        "y": 80,
+        "y": 160,
         "wires": [
             [
                 "8977de0e591c3052"
@@ -46,7 +46,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "$fromMillis(payload,'[Y0001][M01][D01]T[H01][m01]','+0900')",
+                "to": "$fromMillis(payload,'[Y0001][M01][D01]_[H01][m01][s01]','+0900')",
                 "tot": "jsonata"
             }
         ],
@@ -56,7 +56,7 @@
         "to": "",
         "reg": false,
         "x": 330,
-        "y": 80,
+        "y": 160,
         "wires": [
             [
                 "8b4c5042f3f26f35"
@@ -75,34 +75,9 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 550,
-        "y": 80,
+        "x": 590,
+        "y": 160,
         "wires": []
-    },
-    {
-        "id": "b318cd161c428838",
-        "type": "moment",
-        "z": "8eb2284d2a0607cf",
-        "name": "",
-        "topic": "",
-        "input": "payload",
-        "inputType": "msg",
-        "inTz": "Africa/Abidjan",
-        "adjAmount": "0",
-        "adjType": "hours",
-        "adjDir": "add",
-        "format": "YYYYMMDDTHHmm",
-        "locale": "ja_JP",
-        "output": "payload",
-        "outputType": "msg",
-        "outTz": "Asia/Tokyo",
-        "x": 360,
-        "y": 240,
-        "wires": [
-            [
-                "3396668a27432d00"
-            ]
-        ]
     },
     {
         "id": "68de5c917267ee05",
@@ -148,6 +123,95 @@
         "statusType": "auto",
         "x": 590,
         "y": 240,
+        "wires": []
+    },
+    {
+        "id": "b318cd161c428838",
+        "type": "moment",
+        "z": "8eb2284d2a0607cf",
+        "name": "",
+        "topic": "",
+        "input": "payload",
+        "inputType": "msg",
+        "inTz": "Africa/Abidjan",
+        "adjAmount": "0",
+        "adjType": "hours",
+        "adjDir": "add",
+        "format": "YYYYMMDD_HHmmss",
+        "locale": "ja_JP",
+        "output": "payload",
+        "outputType": "msg",
+        "outTz": "Asia/Tokyo",
+        "x": 360,
+        "y": 240,
+        "wires": [
+            [
+                "3396668a27432d00"
+            ]
+        ]
+    },
+    {
+        "id": "5ab02909abb8740e",
+        "type": "inject",
+        "z": "8eb2284d2a0607cf",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 80,
+        "wires": [
+            [
+                "fdb44b9b81171fd8"
+            ]
+        ]
+    },
+    {
+        "id": "fdb44b9b81171fd8",
+        "type": "function",
+        "z": "8eb2284d2a0607cf",
+        "name": "",
+        "func": "// ペイロードから日付オブジェクトを生成\nlet date = new Date();\n\n//年・月・日を取得する\nlet year = date.getFullYear();\nlet month = date.getMonth()+1;\nlet day = date.getDate();\nmonth = (\"0\" + month).slice(-2);\nday = (\"0\" + day).slice(-2);\n//時・分・秒を取得する\nlet hour = date.getHours();\nlet minute = date.getMinutes();\nlet second = date.getSeconds();\nhour = (\"0\" + hour).slice(-2);\nminute = (\"0\" + minute).slice(-2);\nsecond = (\"0\" + second).slice(-2);\n\n// 日付文字列に変換して再度ペイロードをセット\nmsg.payload = year+month+day+\"_\"+hour+minute+second;\n// 次のノードへmsgオブジェクトを返す\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 80,
+        "wires": [
+            [
+                "6f33f18dc3a4ac96"
+            ]
+        ]
+    },
+    {
+        "id": "6f33f18dc3a4ac96",
+        "type": "debug",
+        "z": "8eb2284d2a0607cf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 80,
         "wires": []
     }
 ]
